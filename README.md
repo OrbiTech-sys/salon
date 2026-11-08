@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Maison Muse, Hair Atelier (demo)
 
-## Getting Started
-
-First, run the development server:
+A reusable salon website demo by **The OrbiTech Solutions**. Next.js (App Router), TypeScript, Tailwind CSS v4, Motion for React, Lucide icons, React Hook Form and Zod.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rebrand it for another salon
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything the page shows is read from **`config/salon.config.ts`**:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| What | Where in the config |
+| --- | --- |
+| Name, wordmark, tagline, description, site URL | `name`, `logo`, `tagline`, `description`, `siteUrl` |
+| Brand colors | `brand.colors` (applied to `<html>`; defaults mirror `app/tokens.css`) |
+| Address, phone, email, maps link, map embed | `contact` (the map renders only when `mapEmbedUrl` is set) |
+| Opening hours (also drives the booking time slots) | `hours` |
+| Social links | `social` |
+| Booking | `booking.externalUrl` (see below), `booking.endpoint`, slot length |
+| Services, prices, durations, optional service photos | `services` |
+| Artists | `stylists` |
+| Gallery, before and after pairs, social tiles | `gallery`, `beforeAfter`, `social_gallery` |
+| Reviews, FAQ, "why choose us" | `testimonials`, `faqs`, `why` |
 
-## Learn More
+Fonts are set in `app/layout.tsx` (`next/font/google`). Typography and spacing tokens live in `app/tokens.css`.
 
-To learn more about Next.js, take a look at the following resources:
+### Booking
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **`booking.externalUrl`** set (Fresha, Vagaro, Square, Boulevard, Acuity ...): every Book button opens that URL in a new tab and the demo form is replaced by a single booking button.
+* Left empty: Book buttons scroll to the on-page form and pre-select the service or artist. The form validates, shows a loading state and a preview of the request, and says plainly that **nothing is sent or reserved**.
+* **`booking.endpoint`** set: the form POSTs its values as JSON to that URL and reports a failure if the request does not succeed.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Demo content to replace before launch
 
-## Deploy on Vercel
+* Prices, artist names and biographies, reviews and FAQ answers are illustrative and labelled as such on the page.
+* The address (`100 Example Avenue`), phone (`(212) 555-0100`, a fictional number) and email (`hello@example.com`) are placeholders. Structured data (JSON-LD) leaves contact details out until `contact.isPlaceholder` is `false`.
+* Photographs in `public/photos` are stand-ins licensed under Creative Commons from Wikimedia Commons. Each is credited in the footer from its entry in `config/salon.config.ts`. Replace the files (same names, or edit the `photos` map) with the salon's own photography and remove the credits for anything you replace.
+* The before and after slider shows one stock photograph with a filter standing in for "before". Add a real `before` photo to an entry in `beforeAfter` to use genuine client pairs.
+* Set `NEXT_PUBLIC_SITE_URL` to the production origin for correct metadata, sitemap and Open Graph URLs.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/            layout, page, tokens.css (design tokens), globals.css, privacy page
+config/         salon.config.ts (all content), types.ts
+components/
+  site/         one component per section (Hero, Services, Gallery, BookingForm ...)
+  ui/           BookLink, Photo, Reveal
+  providers/    Motion setup and booking selection state
+lib/            formatting helpers, booking validation, active-section hook
+```

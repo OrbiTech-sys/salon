@@ -1,0 +1,52 @@
+[
+ {
+  "shape": "Salon lookbook, one long editorial page",
+  "theme": "custom",
+  "axes": "light/high-contrast-serif/chromatic-red",
+  "hero": "Stage: headline and actions left, tall ombre portrait right",
+  "nav": "split masthead, links either side of a centred wordmark",
+  "footer": "espresso mast, wordmark set huge over four link columns",
+  "imagery": "photographs, Wikimedia Commons stand-ins, 16",
+  "photos": [
+   "ombre-honey",
+   "colour-wall",
+   "colour-foils",
+   "shampoo-bowl",
+   "braid-length",
+   "updo-style",
+   "bob-profile",
+   "bob-fringe",
+   "brunette-long",
+   "hair-rear-brunette",
+   "copper-portrait",
+   "curls-copper",
+   "curls-texture",
+   "dutch-braid",
+   "french-braid"
+  ],
+  "entry": "book",
+  "fingerprint": "light/high-contrast-serif/chromatic-red",
+  "sections": [
+   "Hero",
+   "Split",
+   "Switcher+Rows",
+   "Showcase+Masonry",
+   "Grid",
+   "Rows",
+   "Statement",
+   "Form",
+   "Schedule",
+   "Rows",
+   "Grid",
+   "Band",
+   "Mast"
+  ],
+  "signature": "service ledger beside a category photograph that changes with each tab",
+  "waived": [
+   "39b"
+  ],
+  "prompt": "premium conversion-focused women hair salon demo site, Maison Muse",
+  "date": "2026-11-08",
+  "mode": "build"
+ }
+]
