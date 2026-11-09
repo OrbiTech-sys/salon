@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "photos": "node scripts/sync-photos.mjs",
+    "predev": "node scripts/sync-photos.mjs",
+    "prebuild": "node scripts/sync-photos.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.3",

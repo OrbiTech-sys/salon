@@ -15,6 +15,8 @@ export type Photo = {
   alt: string;
   /** CSS object-position, used to keep the subject in frame when cropped. */
   position?: string;
+  /** True when the picture comes from a file in public/photos. */
+  supplied?: boolean;
   /** Present for third-party photographs. Credits are listed in the footer. */
   credit?: PhotoCredit;
 };

@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { salon } from "@/config/salon.config";
 import type { GalleryCategoryId, GalleryItem } from "@/config/types";
 import { Photo } from "@/components/ui/Photo";
+import { Reveal } from "@/components/ui/Reveal";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 type Filter = "all" | GalleryCategoryId;
@@ -51,7 +52,7 @@ export function Gallery() {
         transition={{ duration: 0.45, ease }}
       >
         {items.map((item, i) => (
-          <li key={item.id} className="masonry__item">
+          <Reveal key={item.id} as="li" curtain delay={Math.min(i, 8) * 0.06} className="masonry__item">
             <button
               type="button"
               className="tile"
@@ -63,7 +64,7 @@ export function Gallery() {
               </span>
               <span className="tile__caption">{item.caption}</span>
             </button>
-          </li>
+          </Reveal>
         ))}
       </m.ul>
 
@@ -146,10 +147,12 @@ function Lightbox({
           </div>
           <div className="lightbox__bar">
             <p className="lightbox__caption">{item.caption}</p>
-            {item.photo.credit && (
+            {item.photo.credit ? (
               <a className="lightbox__credit" href={item.photo.credit.url} target="_blank" rel="noopener noreferrer">
                 Photo: {item.photo.credit.author}, {item.photo.credit.license}
               </a>
+            ) : (
+              <span className="lightbox__credit">Illustrative image</span>
             )}
           </div>
         </m.div>

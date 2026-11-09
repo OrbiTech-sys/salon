@@ -11,7 +11,7 @@ export function Contact() {
     <section id="contact" className="section section--band contact" aria-labelledby="contact-title">
       <div className="container">
         <div className="contact__top">
-          <Reveal className="contact__head">
+          <Reveal focus className="contact__head">
             <h2 id="contact-title">Visit the salon</h2>
           </Reveal>
           <Reveal className="contact__details" delay={0.08}>

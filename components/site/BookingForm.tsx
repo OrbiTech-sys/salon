@@ -90,16 +90,20 @@ export function BookingForm() {
   // "Book this service" and "Book with this artist" buttons pre-select their values here.
   useEffect(() => {
     if (selection.nonce === 0) return;
-    if (selection.serviceId) setValue("service", selection.serviceId, { shouldValidate: true });
-    if (selection.stylistId) setValue("stylist", selection.stylistId, { shouldValidate: true });
+    const { serviceId, stylistId, date: pickedDate, time: pickedTime } = selection.last;
+    if (serviceId) setValue("service", serviceId, { shouldValidate: true });
+    if (stylistId) setValue("stylist", stylistId, { shouldValidate: true });
+    if (pickedDate) setValue("date", pickedDate, { shouldValidate: true });
+    if (pickedTime) setValue("time", pickedTime, { shouldValidate: true });
   }, [selection, setValue]);
 
   const announce =
     selection.nonce === 0
       ? ""
       : [
-          selection.serviceId ? `Service set to ${serviceName(selection.serviceId)}.` : "",
-          selection.stylistId ? `Artist set to ${stylistName(selection.stylistId)}.` : "",
+          selection.last.serviceId ? `Service set to ${serviceName(selection.last.serviceId)}.` : "",
+          selection.last.stylistId ? `Artist set to ${stylistName(selection.last.stylistId)}.` : "",
+          selection.last.date && selection.last.time ? `Date and time set to ${formatLongDate(selection.last.date)} at ${formatTime(selection.last.time)}.` : "",
         ]
           .filter(Boolean)
           .join(" ");

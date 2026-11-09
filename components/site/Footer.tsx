@@ -100,16 +100,20 @@ export function Footer() {
           <Link href="/privacy">Privacy Policy</Link>
         </div>
         <p className="footer__credits" data-credits>
-          Photographs:{" "}
-          {credits.map((c, i) => (
-            <span key={c.url}>
-              <a href={c.url} target="_blank" rel="noopener noreferrer">
-                {c.author}
-              </a>{" "}
-              ({c.license}){i < credits.length - 1 ? ", " : "."}
-            </span>
-          ))}{" "}
-          Licensed stand-ins from Wikimedia Commons, not work by this salon.
+          {credits.length > 0 ? (
+            <>
+              Photographs:{" "}
+              {credits.map((c, i) => (
+                <span key={c.url}>
+                  <a href={c.url} target="_blank" rel="noopener noreferrer">
+                    {c.author}
+                  </a>{" "}
+                  ({c.license}){i < credits.length - 1 ? ", " : "."}
+                </span>
+              ))}
+            </>
+          ) : null}{" "}
+          Images on this site are illustrative demo content, not photographs of this salon&apos;s work.
         </p>
       </div>
     </footer>

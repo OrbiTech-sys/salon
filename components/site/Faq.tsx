@@ -11,7 +11,7 @@ export function Faq() {
   return (
     <section id="faq" className="section section--l faq" aria-labelledby="faq-title">
       <div className="container faq__grid">
-        <Reveal className="faq__head">
+        <Reveal focus className="faq__head">
           <h2 id="faq-title">Questions, answered</h2>
           <p className="lead">Answers are examples that the salon can edit.</p>
         </Reveal>

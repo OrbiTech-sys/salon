@@ -7,7 +7,7 @@ export function Social() {
   return (
     <section id="social" className="section social" aria-labelledby="social-title">
       <div className="container">
-        <Reveal className="section__head">
+        <Reveal focus className="section__head">
           <h2 id="social-title">Follow our work</h2>
           <div className="social__follow">
             <a className="btn btn--quiet" href={instagram.url} target="_blank" rel="noopener noreferrer">
@@ -20,7 +20,7 @@ export function Social() {
         </Reveal>
         <ul className="social__grid">
           {salon.social_gallery.map((item, i) => (
-            <Reveal key={item.id} as="li" delay={i * 0.05}>
+            <Reveal key={item.id} as="li" curtain delay={i * 0.07}>
               <a
                 className="social__tile"
                 href={instagram.url}

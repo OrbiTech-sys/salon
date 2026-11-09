@@ -6,13 +6,13 @@ export function Intro() {
   return (
     <section id="about" className="section section--l intro" aria-labelledby="intro-title">
       <div className="container intro__grid">
-        <Reveal className="intro__photo">
+        <Reveal curtain className="intro__photo">
           <div className="frame">
-            <Photo photo={photos.colourWall} sizes="(min-width: 60rem) 52vw, 100vw" />
+            <Photo photo={photos.intro} sizes="(min-width: 60rem) 52vw, 100vw" />
           </div>
         </Reveal>
         <div className="intro__text">
-          <Reveal>
+          <Reveal focus>
             <h2 id="intro-title">Beauty Is Personal. Your Hair Should Be Too.</h2>
           </Reveal>
           <Reveal delay={0.08}>

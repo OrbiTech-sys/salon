@@ -6,7 +6,7 @@ export function Transformations() {
   return (
     <section id="gallery" className="section section--l transformations" aria-labelledby="gallery-title">
       <div className="container">
-        <Reveal className="section__head">
+        <Reveal focus className="section__head">
           <h2 id="gallery-title">Featured transformations</h2>
           <p className="head-note">Compare a look, then browse the work by category.</p>
         </Reveal>

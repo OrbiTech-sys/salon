@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
+import { animate, useInView } from "motion/react";
 import { MoveHorizontal } from "lucide-react";
 import { salon } from "@/config/salon.config";
 import { Photo } from "@/components/ui/Photo";
@@ -18,6 +19,21 @@ export function BeforeAfter() {
   const frameRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
   const item = salon.beforeAfter[index];
+  const touched = useRef(false);
+  const inView = useInView(frameRef, { once: true, margin: "0px 0px -25% 0px" });
+
+  // Cinematic intro: the divider sweeps once across the frame to show both sides, unless the visitor takes over first.
+  useEffect(() => {
+    if (!inView || touched.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const controls = animate(0, 1, {
+      duration: 3.4,
+      ease: "easeInOut",
+      onUpdate: (p) => {
+        if (!touched.current) setPosition(50 + 38 * Math.sin(p * Math.PI * 2));
+      },
+    });
+    return () => controls.stop();
+  }, [inView]);
 
   const moveTo = (clientX: number) => {
     const frame = frameRef.current;
@@ -27,6 +43,7 @@ export function BeforeAfter() {
   };
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    touched.current = true;
     dragging.current = true;
     event.currentTarget.setPointerCapture(event.pointerId);
     moveTo(event.clientX);
@@ -39,6 +56,7 @@ export function BeforeAfter() {
   };
 
   const selectItem = (next: number) => {
+    touched.current = true;
     setIndex(next);
     setPosition(50);
   };
@@ -76,7 +94,10 @@ export function BeforeAfter() {
           max={100}
           step={1}
           value={Math.round(position)}
-          onChange={(event) => setPosition(Number(event.target.value))}
+          onChange={(event) => {
+            touched.current = true;
+            setPosition(Number(event.target.value));
+          }}
           aria-label={`Compare before and after: ${item.title}`}
           aria-valuetext={`${Math.round(position)} percent of the before image shown`}
         />
@@ -104,8 +125,8 @@ export function BeforeAfter() {
         <h3 className="ba__title">{item.title}</h3>
         <p>{item.description}</p>
         <p className="note">
-          Interactive demo on a stock photograph with a filter applied. A real salon replaces it with genuine client
-          before and after photographs.
+          Interactive demo on one photograph with a filter standing in for &ldquo;before&rdquo;. A real salon replaces it with
+          genuine client before and after photographs.
         </p>
       </div>
     </div>

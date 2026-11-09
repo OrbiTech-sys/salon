@@ -65,3 +65,24 @@ export function formatLongDate(iso: string): string {
   const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
   return date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
 }
+
+export type OpenDay = { iso: string; weekday: string; label: string };
+
+/** The next `count` days the salon is open, starting from `startIso` (inclusive). */
+export function upcomingOpenDays(startIso: string, hours: HoursRow[], count: number): OpenDay[] {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(startIso);
+  if (!match) return [];
+  const days: OpenDay[] = [];
+  for (let i = 0; i < 28 && days.length < count; i += 1) {
+    const d = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]) + i);
+    const row = hours.find((h) => h.weekday === d.getDay());
+    if (!row?.opens) continue;
+    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    days.push({
+      iso,
+      weekday: i === 0 ? "Today" : d.toLocaleDateString("en-US", { weekday: "short" }),
+      label: d.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    });
+  }
+  return days;
+}

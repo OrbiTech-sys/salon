@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# original, unoptimized photographs kept locally (the site uses the optimized copies in public/photos)
+/source-photos
+/.photos-tmp

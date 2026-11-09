@@ -1,4 +1,5 @@
 import type { Photo, SalonConfig } from "./types";
+import photoManifest from "./photo-manifest.json";
 
 /**
  * MAISON MUSE demo configuration.
@@ -8,132 +9,39 @@ import type { Photo, SalonConfig } from "./types";
  * hours, contact details and the booking link) is read from here.
  *
  * All prices, artists, reviews and contact details below are illustrative placeholders.
- * The photographs are licensed stand-ins from Wikimedia Commons, not work by this salon.
+ * Pictures come from public/photos: a file named after a slot (hero.jpg, gallery-01.jpg ...) is used automatically (see PHOTOS.md).
+ * The images are illustrative demo content, not photographs of this salon's work.
  */
 
-const commons = (file: string) => `https://commons.wikimedia.org/wiki/File:${file}`;
+/** A slot is a picture the salon can replace by saving public/photos/<slot>.jpg (see PHOTOS.md). */
+const supplied = photoManifest as Record<string, { src: string; width: number; height: number }>;
+
+function slot(name: string, alt: string, position = "50% 50%"): Photo {
+  // A missing slot borrows the hero photograph, so the page never shows a broken image.
+  const own = supplied[name] ?? supplied.hero;
+  if (!own) throw new Error(`Add public/photos/${name}.jpg (or hero.jpg) and run npm run photos.`);
+  return { src: own.src, width: own.width, height: own.height, alt, position, supplied: true };
+}
 
 export const photos = {
-  ombre: {
-    src: "/photos/ombre-honey.jpg",
-    width: 1920,
-    height: 1372,
-    alt: "Woman with long brown hair and honey ombré ends smiling over her shoulder",
-    position: "62% 38%",
-    credit: { author: "Nan Palmero", license: "CC BY 2.0", url: commons("Woman_with_ombr%C3%A9_hair_colouring.jpg") },
-  },
-  colourWall: {
-    src: "/photos/colour-wall.jpg",
-    width: 1920,
-    height: 1465,
-    alt: "A wall of professional hair color tubes arranged on shelves in a hairdressing shop",
-    position: "50% 50%",
-    credit: { author: "Pittigrilli", license: "CC BY-SA 4.0", url: commons("Shelve_with_various_hair_colours_(hair_dyes)_in_a_hairdresser_shop_in_Germany_(2023).jpg") },
-  },
-  colourFoils: {
-    src: "/photos/colour-foils.jpg",
-    width: 1920,
-    height: 1249,
-    alt: "A colorist lifting sections of hair into foils during a highlighting service",
-    position: "55% 40%",
-    credit: { author: "Dean Wissing", license: "CC BY-SA 2.0", url: commons("Haircoloring.jpg") },
-  },
-  shampooBowl: {
-    src: "/photos/shampoo-bowl.jpg",
-    width: 1280,
-    height: 2088,
-    alt: "A stylist rinsing a client's hair at a salon basin",
-    position: "50% 35%",
-    credit: { author: "Frank C. Müller", license: "CC BY-SA 4.0", url: commons("Frisoerin_(fcm).jpg") },
-  },
-  braidLength: {
-    src: "/photos/braid-length.jpg",
-    width: 1280,
-    height: 1932,
-    alt: "A woman walking away with a very long, thick braid down her back",
-    position: "50% 28%",
-    credit: { author: "Ed Yourdon", license: "CC BY-SA 2.0", url: commons("Long_braid.jpg") },
-  },
-  updo: {
-    src: "/photos/updo-style.jpg",
-    width: 1280,
-    height: 1707,
-    alt: "A model in a salon robe with a sculpted high updo",
-    position: "50% 22%",
-    credit: { author: "beyrouth", license: "CC BY 2.0", url: commons("Woman_with_an_updo_hairstyle_(4768263593).jpg") },
-  },
-  bobProfile: {
-    src: "/photos/bob-profile.jpg",
-    width: 1920,
-    height: 1920,
-    alt: "Side profile of a sharp inverted bob haircut with a blunt fringe",
-    position: "50% 40%",
-    credit: { author: "Thirteen Of Clubs", license: "CC BY-SA 2.0", url: commons("Inverted_bob_haircut.jpg") },
-  },
-  bobFringe: {
-    src: "/photos/bob-fringe.jpg",
-    width: 1280,
-    height: 1317,
-    alt: "A woman with a glossy short bob and straight fringe",
-    position: "50% 35%",
-    credit: { author: "Lillian Vasquez", license: "CC BY-SA 2.0", url: commons("Short_brown_hair.jpg") },
-  },
-  brunetteLong: {
-    src: "/photos/brunette-long.jpg",
-    width: 1280,
-    height: 1934,
-    alt: "A woman with long, straight, deep brunette hair and a strong red lip",
-    position: "50% 30%",
-    credit: { author: "THOR", license: "CC BY 2.0", url: commons("Brunette_red_lipstick.jpg") },
-  },
-  hairRear: {
-    src: "/photos/hair-rear-brunette.jpg",
-    width: 1920,
-    height: 2560,
-    alt: "Back view of long, glossy dark brown hair",
-    position: "50% 72%",
-    credit: { author: "Alex Neman", license: "CC BY-SA 4.0", url: commons("Female_with_dark_brown_hair,_rear_view.jpg") },
-  },
-  copperPortrait: {
-    src: "/photos/copper-portrait.jpg",
-    width: 1920,
-    height: 1583,
-    alt: "Portrait of a woman with long natural copper hair",
-    position: "50% 30%",
-    credit: { author: "dusdin (cropped by Gridge)", license: "CC BY 2.0", url: commons("Woman_redhead_natural_portrait_1.jpg") },
-  },
-  curlsCopper: {
-    src: "/photos/curls-copper.jpg",
-    width: 1920,
-    height: 1702,
-    alt: "A woman with a halo of tight copper-colored natural curls",
-    position: "50% 35%",
-    credit: { author: "Erik Jacobs", license: "CC BY 2.0", url: commons("Natural_redhead_black_girl_(red_power_hairstyle).jpg") },
-  },
-  curlsTexture: {
-    src: "/photos/curls-texture.jpg",
-    width: 1280,
-    height: 1329,
-    alt: "A woman with voluminous natural black curls",
-    position: "50% 30%",
-    credit: { author: "peter klashorst", license: "CC BY 2.0", url: commons("Wild_hair.jpg") },
-  },
-  dutchBraid: {
-    src: "/photos/dutch-braid.jpg",
-    width: 1280,
-    height: 1707,
-    alt: "Back view of a neat Dutch braid on long brown hair",
-    position: "50% 40%",
-    credit: { author: "Stilfehler", license: "CC BY-SA 3.0", url: commons("Dutch_Braid.JPG") },
-  },
-  frenchBraid: {
-    src: "/photos/french-braid.jpg",
-    width: 1280,
-    height: 2274,
-    alt: "Back view of a classic French braid against a pink wall",
-    position: "50% 22%",
-    credit: { author: "Stilfehler", license: "CC BY-SA 3.0", url: commons("Classic_French_Braid.JPG") },
-  },
+  hero: slot("hero", "A bright luxury salon with arched gold mirrors, blush styling chairs and a sweeping staircase", "50% 50%"),
+  intro: slot("intro", "A woman with long, glossy chestnut hair standing in the salon", "50% 40%"),
+  booking: slot("interior", "Arched mirrors and blush styling chairs in the salon", "50% 50%"),
+  cuts: slot("cuts", "A stylist straightening a section of red-brown hair", "55% 50%"),
+  color: slot("color", "A colorist painting color onto foils in a client's hair", "60% 50%"),
+  treatments: slot("treatments", "A client having her hair washed at the basin", "50% 45%"),
+  extensions: slot("extensions", "Long copper-auburn waves seen from behind", "50% 50%"),
+  special: slot("special", "An elegant low bridal updo with a floral hair clip", "45% 50%"),
+  artist1: slot("artist-1", "Portrait of Isla Verrant, creative director", "50% 35%"),
+  artist2: slot("artist-2", "Portrait of Theo Marchetti, texture and extensions artist", "50% 35%"),
+  artist3: slot("artist-3", "Portrait of Noor Castellane, senior colorist", "50% 35%"),
+  artist4: slot("artist-4", "Portrait of Elias Roux, bridal and event stylist", "50% 35%"),
+  closing: slot("closing", "A woman seen from behind with long honey-blonde hair in a twisted half-up style with a pearl hair vine", "50% 50%"),
+  band1: slot("band-1", "Hair washing seats in the salon", "50% 50%"),
+  band2: slot("band-2", "The salon reception with arched shelves of products", "50% 55%"),
+  balayage: slot("gallery-01", "Close-up of a woman with caramel balayage highlights and a side-swept fringe", "50% 40%"),
+  braidPearl: slot("gallery-02", "A loose side braid decorated with a delicate pearl and baby's-breath hair vine", "50% 40%"),
+  waves: slot("gallery-03", "A woman with shoulder-length wavy hair", "50% 35%"),
 } satisfies Record<string, Photo>;
 
 export const salon: SalonConfig = {
@@ -219,7 +127,7 @@ export const salon: SalonConfig = {
       id: "cuts",
       name: "Haircuts & Styling",
       summary: "Cuts shaped around how your hair falls and how you wear it.",
-      image: photos.bobProfile,
+      image: photos.cuts,
       services: [
         { id: "womens-haircut", name: "Women's haircut", description: "A tailored cut with a consultation, wash and finish dry.", price: { kind: "from", amount: 95 }, duration: "60 min" },
         { id: "signature-haircut", name: "Signature haircut", description: "A longer appointment with a senior artist, precision cutting and a styled finish.", price: { kind: "from", amount: 145 }, duration: "75 min" },
@@ -231,7 +139,7 @@ export const salon: SalonConfig = {
       id: "color",
       name: "Hair Color",
       summary: "Color mixed for your tone, your texture and your upkeep.",
-      image: photos.colourFoils,
+      image: photos.color,
       services: [
         { id: "single-process", name: "Single process", description: "One all-over shade, from a subtle gloss to a full change.", price: { kind: "from", amount: 140 }, duration: "2 hr" },
         { id: "root-touch-up", name: "Root touch-up", description: "Fresh regrowth coverage, blended into your existing color.", price: { kind: "from", amount: 120 }, duration: "90 min" },
@@ -245,7 +153,7 @@ export const salon: SalonConfig = {
       id: "treatments",
       name: "Hair Treatments",
       summary: "Repair, smoothing and scalp care to keep the color and shine.",
-      image: photos.hairRear,
+      image: photos.treatments,
       services: [
         { id: "keratin", name: "Keratin treatment", description: "A smoothing treatment that softens frizz and eases daily styling.", price: { kind: "from", amount: 350 }, duration: "3 hr" },
         { id: "deep-conditioning", name: "Deep conditioning", description: "An intensive mask for dry or heat-styled hair.", price: { kind: "from", amount: 55 }, duration: "30 min" },
@@ -257,7 +165,7 @@ export const salon: SalonConfig = {
       id: "extensions",
       name: "Hair Extensions",
       summary: "Length and volume matched to your color and your hair's own movement.",
-      image: photos.braidLength,
+      image: photos.extensions,
       services: [
         { id: "extension-consultation", name: "Extension consultation", description: "Color matching, method advice and a plan for upkeep.", price: { kind: "from", amount: 40 }, duration: "30 min" },
         { id: "tape-in", name: "Tape-in extensions", description: "Flat, lightweight wefts placed close to the root.", price: { kind: "from", amount: 480 }, duration: "2 hr" },
@@ -269,7 +177,7 @@ export const salon: SalonConfig = {
       id: "special",
       name: "Special Services",
       summary: "Planned styling for the days that matter most.",
-      image: photos.updo,
+      image: photos.special,
       services: [
         { id: "bridal", name: "Bridal hair", description: "A trial and wedding day styling, planned around your dress and veil.", price: { kind: "from", amount: 250 }, duration: "90 min" },
         { id: "event-styling", name: "Event styling", description: "Styling for parties, shoots and nights out.", price: { kind: "from", amount: 150 }, duration: "75 min" },
@@ -283,9 +191,17 @@ export const salon: SalonConfig = {
       id: "isla",
       name: "Isla Verrant",
       title: "Creative Director",
-      specialties: ["Precision cutting", "Bobs and fringes", "Texture reshaping"],
+      specialties: ["Precision cutting", "Layers and fringes", "Texture reshaping"],
       intro: "Isla starts with the way your hair falls, then builds a cut that grows out well.",
-      portrait: photos.brunetteLong,
+      portrait: photos.artist1,
+    },
+    {
+      id: "theo",
+      name: "Theo Marchetti",
+      title: "Texture and Extensions Artist",
+      specialties: ["Natural curls", "Tape-in extensions", "Volume and length"],
+      intro: "Theo works with natural texture and blends extensions so they move like your own.",
+      portrait: photos.artist2,
     },
     {
       id: "noor",
@@ -293,23 +209,15 @@ export const salon: SalonConfig = {
       title: "Senior Colorist",
       specialties: ["Balayage", "Blonde transformations", "Color correction"],
       intro: "Noor plans color in stages, so tone and condition stay beautiful between visits.",
-      portrait: photos.copperPortrait,
+      portrait: photos.artist3,
     },
     {
-      id: "delphine",
-      name: "Delphine Roux",
-      title: "Texture and Extensions Artist",
-      specialties: ["Natural curls", "Tape-in extensions", "Volume and length"],
-      intro: "Delphine works with natural texture and blends extensions so they move like your own.",
-      portrait: photos.curlsCopper,
-    },
-    {
-      id: "marisol",
-      name: "Marisol Quill",
+      id: "elias",
+      name: "Elias Roux",
       title: "Bridal and Event Stylist",
       specialties: ["Bridal updos", "Soft waves", "Event styling"],
-      intro: "Marisol designs the look with you at a trial, then makes sure it lasts the whole day.",
-      portrait: photos.updo,
+      intro: "Elias designs the look with you at a trial, then makes sure it lasts the whole day.",
+      portrait: photos.artist4,
     },
   ],
 
@@ -323,37 +231,32 @@ export const salon: SalonConfig = {
   ],
 
   gallery: [
-    { id: "g-ombre", photo: photos.ombre, categories: ["balayage", "blonde"], caption: "Honey ends on a deep brunette base" },
-    { id: "g-rear", photo: photos.hairRear, categories: ["brunette"], caption: "Glossy brunette length" },
-    { id: "g-bob", photo: photos.bobFringe, categories: ["haircuts"], caption: "Blunt bob with a soft fringe" },
-    { id: "g-foils", photo: photos.colourFoils, categories: ["blonde", "balayage"], caption: "Highlights placed by hand" },
-    { id: "g-copper", photo: photos.copperPortrait, categories: ["balayage"], caption: "Natural copper tones" },
-    { id: "g-dutch", photo: photos.dutchBraid, categories: ["styling"], caption: "Dutch braid for the weekend" },
-    { id: "g-extensions", photo: photos.braidLength, categories: ["extensions", "styling"], caption: "Length and weight in a single braid" },
-    { id: "g-brunette", photo: photos.brunetteLong, categories: ["brunette"], caption: "Rich brunette with a straight finish" },
-    { id: "g-curls", photo: photos.curlsTexture, categories: ["haircuts", "styling"], caption: "Natural curls cut for shape" },
-    { id: "g-french", photo: photos.frenchBraid, categories: ["styling"], caption: "Classic French braid" },
-    { id: "g-bob-profile", photo: photos.bobProfile, categories: ["haircuts"], caption: "Inverted bob in profile" },
-    { id: "g-halo", photo: photos.curlsCopper, categories: ["haircuts", "balayage"], caption: "Copper curls with plenty of lift" },
+    { id: "g-balayage", photo: photos.balayage, categories: ["balayage", "brunette"], caption: "Caramel balayage with a side-swept fringe" },
+    { id: "g-chestnut", photo: photos.intro, categories: ["brunette"], caption: "Glossy chestnut with long layers" },
+    { id: "g-copper", photo: photos.extensions, categories: ["balayage", "extensions"], caption: "Copper waves with added length" },
+    { id: "g-honey", photo: photos.closing, categories: ["blonde", "styling"], caption: "Honey blonde in a twisted half-up" },
+    { id: "g-braid", photo: photos.braidPearl, categories: ["styling"], caption: "A loose braid with a pearl hair vine" },
+    { id: "g-updo", photo: photos.special, categories: ["styling"], caption: "A low bridal updo with a floral clip" },
+    { id: "g-layers", photo: photos.waves, categories: ["haircuts"], caption: "Shoulder-length layers with soft waves" },
+    { id: "g-smooth", photo: photos.cuts, categories: ["haircuts", "styling"], caption: "Smoothing a section of copper-brown hair" },
+    { id: "g-foils", photo: photos.color, categories: ["blonde", "balayage"], caption: "Highlights placed by hand" },
   ],
-
   beforeAfter: [
     {
       id: "ba-gloss",
       title: "Gloss and tone",
       description: "Drag the handle to compare flat, tired color with a glossed, toned finish.",
-      after: photos.copperPortrait,
-      beforeFilter: "grayscale(0.7) contrast(0.82) brightness(1.04)",
+      after: photos.intro,
+      beforeFilter: "grayscale(0.55) contrast(0.78) brightness(1.06) sepia(0.15)",
     },
     {
-      id: "ba-depth",
-      title: "Color depth",
-      description: "Drag the handle to see muted tone lifted back to warm, dimensional color.",
-      after: photos.curlsCopper,
-      beforeFilter: "grayscale(0.65) contrast(0.8) brightness(1.05)",
+      id: "ba-color",
+      title: "Color correction",
+      description: "Drag the handle to see muted, uneven color corrected to a rich, even finish.",
+      after: photos.balayage,
+      beforeFilter: "saturate(0.5) contrast(0.8) brightness(1.08) sepia(0.35)",
     },
   ],
-
   testimonials: [
     {
       id: "t1",
@@ -404,12 +307,12 @@ export const salon: SalonConfig = {
   ],
 
   social_gallery: [
-    { id: "s1", photo: photos.dutchBraid },
-    { id: "s2", photo: photos.curlsTexture },
-    { id: "s3", photo: photos.hairRear },
-    { id: "s4", photo: photos.copperPortrait },
-    { id: "s5", photo: photos.colourWall },
-    { id: "s6", photo: photos.ombre },
+    { id: "s1", photo: photos.balayage },
+    { id: "s2", photo: photos.extensions },
+    { id: "s3", photo: photos.braidPearl },
+    { id: "s4", photo: photos.special },
+    { id: "s5", photo: photos.closing },
+    { id: "s6", photo: photos.intro },
   ],
 };
 

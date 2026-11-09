@@ -34,13 +34,13 @@ export const metadata: Metadata = {
     siteName: salon.name,
     title,
     description: salon.tagline,
-    images: [{ url: photos.ombre.src, width: photos.ombre.width, height: photos.ombre.height, alt: photos.ombre.alt }],
+    images: [{ url: photos.hero.src, width: photos.hero.width, height: photos.hero.height, alt: photos.hero.alt }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description: salon.tagline,
-    images: [photos.ombre.src],
+    images: [photos.hero.src],
   },
 };
 
@@ -59,7 +59,7 @@ function structuredData() {
     description: salon.description,
     slogan: salon.tagline,
     url: salon.siteUrl,
-    image: new URL(photos.ombre.src, salon.siteUrl).toString(),
+    image: new URL(photos.hero.src, salon.siteUrl).toString(),
   };
   if (!salon.contact.isPlaceholder) {
     data.telephone = salon.contact.phoneDisplay;
@@ -99,7 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${body.variable}`} style={brandVars}>
       <head>
         <noscript>
-          <style>{`[data-reveal],[data-hero],.hero__photo{opacity:1!important;transform:none!important;clip-path:none!important}`}</style>
+          <style>{`[data-reveal],[data-hero],[data-hero] *,.hero__media,.hero__media *{opacity:1!important;transform:none!important;clip-path:none!important;filter:none!important}.curtain{display:none!important}`}</style>
         </noscript>
       </head>
       <body>

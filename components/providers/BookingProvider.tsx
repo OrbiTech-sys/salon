@@ -2,29 +2,34 @@
 
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 
+/** The values a booking button wants the form to pick up. Only what the latest button set is applied. */
+export type BookingChoice = {
+  serviceId?: string;
+  stylistId?: string;
+  /** "YYYY-MM-DD" */
+  date?: string;
+  /** "HH:MM", 24 hour */
+  time?: string;
+};
+
 export type BookingSelection = {
-  serviceId: string;
-  stylistId: string;
-  /** Increments on every selection, so the form can react even when the same service is chosen twice. */
+  /** Increments on every selection, so the form reacts even when the same choice is made twice. */
   nonce: number;
+  last: BookingChoice;
 };
 
 type BookingContextValue = {
   selection: BookingSelection;
-  select: (next: { serviceId?: string; stylistId?: string }) => void;
+  select: (next: BookingChoice) => void;
 };
 
 const BookingContext = createContext<BookingContextValue | null>(null);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
-  const [selection, setSelection] = useState<BookingSelection>({ serviceId: "", stylistId: "", nonce: 0 });
+  const [selection, setSelection] = useState<BookingSelection>({ nonce: 0, last: {} });
 
-  const select = useCallback((next: { serviceId?: string; stylistId?: string }) => {
-    setSelection((prev) => ({
-      serviceId: next.serviceId ?? prev.serviceId,
-      stylistId: next.stylistId ?? prev.stylistId,
-      nonce: prev.nonce + 1,
-    }));
+  const select = useCallback((next: BookingChoice) => {
+    setSelection((prev) => ({ nonce: prev.nonce + 1, last: next }));
   }, []);
 
   const value = useMemo(() => ({ selection, select }), [selection, select]);

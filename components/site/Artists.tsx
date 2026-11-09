@@ -7,15 +7,15 @@ export function Artists() {
   return (
     <section id="artists" className="section artists" aria-labelledby="artists-title">
       <div className="container">
-        <Reveal className="section__head">
+        <Reveal focus className="section__head">
           <h2 id="artists-title">Meet the artists behind the chair</h2>
           <p className="head-note">
-            Demo profiles. The names and biographies are fictional, and the photographs are stock stand-ins for your team.
+            Demo profiles. Names and biographies are fictional, and the portraits are placeholders for your team.
           </p>
         </Reveal>
         <ul className="artists__list">
           {salon.stylists.map((stylist, i) => (
-            <Reveal key={stylist.id} as="li" className="artist" delay={i * 0.08}>
+            <Reveal key={stylist.id} as="li" focus className="artist" delay={i * 0.1}>
               <div className="artist__photo">
                 <Photo photo={stylist.portrait} sizes="(min-width: 75rem) 24vw, (min-width: 40rem) 46vw, 100vw" />
               </div>

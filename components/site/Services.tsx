@@ -42,7 +42,7 @@ export function Services() {
   return (
     <section id="services" className="section services" aria-labelledby="services-title">
       <div className="container">
-        <Reveal className="section__head">
+        <Reveal focus className="section__head">
           <h2 id="services-title">Services and pricing</h2>
           <p className="head-note">{salon.pricingNote}</p>
         </Reveal>
@@ -76,12 +76,12 @@ export function Services() {
                 <m.div
                   key={active.id}
                   className="services__photo-layer"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.45, ease }}
+                  initial={{ clipPath: "inset(0% 0% 100% 0%)", scale: 1.12 }}
+                  animate={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+                  exit={{ opacity: 1, transition: { duration: 1 } }}
+                  transition={{ duration: 0.95, ease }}
                 >
-                  <Photo photo={active.image} sizes="(min-width: 60rem) 30vw, 100vw" />
+                  <Photo photo={active.image} sizes="(min-width: 60rem) 30vw, 100vw" eager />
                 </m.div>
               </AnimatePresence>
             </div>

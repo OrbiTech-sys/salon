@@ -1,0 +1,92 @@
+{
+  "artist-1": {
+    "src": "/photos/artist-1.jpg",
+    "width": 1050,
+    "height": 1050
+  },
+  "artist-2": {
+    "src": "/photos/artist-2.jpg",
+    "width": 1050,
+    "height": 1050
+  },
+  "artist-3": {
+    "src": "/photos/artist-3.jpg",
+    "width": 1050,
+    "height": 1050
+  },
+  "artist-4": {
+    "src": "/photos/artist-4.jpg",
+    "width": 1050,
+    "height": 1050
+  },
+  "band-1": {
+    "src": "/photos/band-1.jpg",
+    "width": 2752,
+    "height": 1536
+  },
+  "band-2": {
+    "src": "/photos/band-2.jpg",
+    "width": 2752,
+    "height": 1536
+  },
+  "closing": {
+    "src": "/photos/closing.jpg",
+    "width": 2752,
+    "height": 1536
+  },
+  "color": {
+    "src": "/photos/color.jpg",
+    "width": 1500,
+    "height": 1500
+  },
+  "cuts": {
+    "src": "/photos/cuts.jpg",
+    "width": 1500,
+    "height": 1500
+  },
+  "extensions": {
+    "src": "/photos/extensions.jpg",
+    "width": 2000,
+    "height": 1493
+  },
+  "gallery-01": {
+    "src": "/photos/gallery-01.jpg",
+    "width": 2000,
+    "height": 1493
+  },
+  "gallery-02": {
+    "src": "/photos/gallery-02.jpg",
+    "width": 2000,
+    "height": 1493
+  },
+  "gallery-03": {
+    "src": "/photos/gallery-03.jpg",
+    "width": 2000,
+    "height": 1493
+  },
+  "hero": {
+    "src": "/photos/hero.jpg",
+    "width": 2752,
+    "height": 1536
+  },
+  "interior": {
+    "src": "/photos/interior.jpg",
+    "width": 1100,
+    "height": 1877
+  },
+  "intro": {
+    "src": "/photos/intro.jpg",
+    "width": 2000,
+    "height": 1493
+  },
+  "special": {
+    "src": "/photos/special.jpg",
+    "width": 2000,
+    "height": 1493
+  },
+  "treatments": {
+    "src": "/photos/treatments.jpg",
+    "width": 1500,
+    "height": 1500
+  }
+}

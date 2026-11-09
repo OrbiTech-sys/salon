@@ -14,14 +14,18 @@ const RIGHT = salon.nav.slice(3);
 
 export function Nav() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  // True while the transparent nav is floating over the photographic hero.
+  const [over, setOver] = useState(true);
   const active = useActiveSection(SECTION_MAP, "top");
   const toggleRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      // Transparent only at the very top; a solid bar once the page moves, so text never slides under the links.
+      setOver(window.scrollY < 40);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -84,7 +88,7 @@ export function Nav() {
   );
 
   return (
-    <header className="nav" data-scrolled={scrolled ? "true" : "false"}>
+    <header className="nav" data-over={over ? "true" : "false"}>
       <div className="container nav__inner">
         <nav className="nav__side nav__side--left" aria-label="Primary">
           {LEFT.map(link)}

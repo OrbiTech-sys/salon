@@ -9,8 +9,8 @@ export function Booking() {
   return (
     <section id="book" className="section section--l booking" aria-labelledby="book-title">
       <div className="container booking__grid">
-        <Reveal className="booking__photo">
-          <Photo photo={photos.shampooBowl} sizes="(min-width: 60rem) 40vw, 100vw" />
+        <Reveal curtain className="booking__photo">
+          <Photo photo={photos.booking} sizes="(min-width: 60rem) 40vw, 100vw" />
         </Reveal>
         <Reveal className="booking__panel" delay={0.08}>
           <h2 id="book-title">Request your appointment</h2>
